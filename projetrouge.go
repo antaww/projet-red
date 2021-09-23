@@ -49,6 +49,8 @@ func (p *personnage) takePot() {
 	}
 }
 
+/// Tâche 5
+
 func (p *personnage) accesInventory() {
 	for i := range p.inventaire {
 		if i >= 0 {
@@ -66,7 +68,6 @@ func (p *personnage) removeInventory(item string) {
 			*inv = append(p.inventaire[:i], p.inventaire[i+1:]...)
 		}
 	}
-	p1.accesInventory()
 }
 
 func (p personnage) DisplayInfo() {
