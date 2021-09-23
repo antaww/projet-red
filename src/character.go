@@ -60,6 +60,7 @@ func (p *Personnage) removeInventory(item string) {
 			*inv = append(p.inventaire[:i], p.inventaire[i+1:]...)
 		}
 	}
+}
 
 func (p Personnage) DisplayInfo() {
 	fmt.Println("Nom :", p.nom)
