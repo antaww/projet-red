@@ -20,6 +20,10 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.inventaire = inventaire
 }
 
+func InitCharacter() {
+	P1.Init("Antoine", "Elfe", 1, 100, 40, []string{"potion", "potion", "potion"})
+}
+
 func (p *Personnage) takePot() {
 	for i := range p.inventaire {
 		if p.inventaire[i] == "potion" {
@@ -65,5 +69,4 @@ func (p Personnage) DisplayInfo() {
 	fmt.Println("Niveau :", p.niveau)
 	fmt.Println("HP max :", p.maxHP)
 	fmt.Println("HP actuels :", p.HP)
-	fmt.Println("Inventaire :", p.inventaire)
 }
