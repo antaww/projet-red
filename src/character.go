@@ -43,7 +43,7 @@ func (p *Personnage) takePot() {
 	}
 }
 
-func (p *Personnage) accesInventory() {
+func (p *personnage) accesInventory() {
 	for i := range p.inventaire {
 		if i >= 0 {
 			fmt.Println("Item", i+1, ":", p.inventaire[i])
@@ -60,8 +60,6 @@ func (p *Personnage) removeInventory(item string) {
 			*inv = append(p.inventaire[:i], p.inventaire[i+1:]...)
 		}
 	}
-	p.accesInventory()
-}
 
 func (p Personnage) DisplayInfo() {
 	fmt.Println("Nom :", p.nom)
