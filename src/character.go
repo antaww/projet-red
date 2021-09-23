@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Personnage struct {
 	nom        string
@@ -8,10 +11,10 @@ type Personnage struct {
 	niveau     int
 	maxHP      int
 	HP         int
-	inventaire []string
+	inventaire map[string]int
 }
 
-func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire []string) {
+func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int) {
 	p.nom = nom
 	p.classe = classe
 	p.niveau = niveau
@@ -21,21 +24,21 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 }
 
 func InitCharacter() {
-	P1.Init("Antoine", "Elfe", 1, 100, 40, []string{"potion", "potion", "potion"})
+	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3})
 }
 
 func (p *Personnage) takePot() {
-	for i := range p.inventaire {
-		if p.inventaire[i] == "potion" {
+	for range p.inventaire {
+		if p.inventaire["potion"] >= 1 {
 			if p.HP == p.maxHP {
 				fmt.Println("Vous êtes full, ne pas utiliser la potion")
 			} else if p.HP+50 > p.maxHP {
 				p.HP += +(p.maxHP - p.HP)
-				p.inventaire[i] = ""
+				p.inventaire["potion"] -= 1
 				fmt.Println(p.nom, "a utilisé une potion")
 			} else {
 				p.HP += +50
-				p.inventaire[i] = ""
+				p.inventaire["potion"] -= 1
 				fmt.Println(p.nom, "a utilisé une potion")
 			}
 			break
@@ -43,22 +46,29 @@ func (p *Personnage) takePot() {
 	}
 }
 
-func (p *personnage) accesInventory() {
-	for i := range p.inventaire {
-		if i >= 0 {
-			fmt.Println("Item", i+1, ":", p.inventaire[i])
-		} else {
-			fmt.Println("Votre inventaire est vide")
-		}
+func (p *Personnage) FreeHealPotion() {
+	p.inventaire["Potion"] += 1
+}
+
+func (p *Personnage) accesInventory() {
+	for key, val := range p.inventaire {
+		fmt.Println(key, ":", val)
+	}
+	if len(p.inventaire) == 0 {
+		fmt.Println("Votre inventaire est vide")
 	}
 }
 
-func (p *Personnage) removeInventory(item string) {
-	inv := &p.inventaire
-	for i := range p.inventaire {
-		if p.inventaire[i] == item {
-			*inv = append(p.inventaire[:i], p.inventaire[i+1:]...)
-		}
+func (p *Personnage) Marchand() {
+	//Affichage choix menu
+	fmt.Println("1 >> Acheter potion de soin (gratuite)")
+	fmt.Println("2 >> Retour au menu principal")
+	o, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
+	o = strings.Replace(o, "\r\n", "", -1)
+	switch o {
+	case "1":
+		fmt.Println(">> Une potion de soin a été achetée par", P1.nom, "<<")
+		P1.FreeHealPotion()
 	}
 }
 
