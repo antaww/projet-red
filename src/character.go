@@ -13,19 +13,21 @@ type Personnage struct {
 	maxHP      int
 	HP         int
 	inventaire map[string]int
+	alive      bool
 }
 
-func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int) {
+func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool) {
 	p.nom = nom
 	p.classe = classe
 	p.niveau = niveau
 	p.maxHP = maxHP
 	p.HP = HP
 	p.inventaire = inventaire
+	p.alive = alive
 }
 
 func InitCharacter() {
-	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3})
+	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true)
 }
 
 func (p *Personnage) takePot() {
@@ -44,6 +46,20 @@ func (p *Personnage) takePot() {
 			}
 			break
 		}
+	}
+}
+
+func (p *Personnage) dead() {
+	if p.HP == 0 {
+		p.alive = false
+		fmt.Println(p.nom, "est mort...")
+		fmt.Println("Résurrection dans 2 secondes...")
+		time.Sleep(1 * time.Second)
+		fmt.Println("Résurrection dans 1 seconde...")
+		time.Sleep(1 * time.Second)
+		p.alive = true
+		p.HP = p.maxHP / 2
+		fmt.Println(p.nom, "est de retour parmis nous, il n'a malheureusement plus que la moitié de sa vie.")
 	}
 }
 

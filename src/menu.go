@@ -35,5 +35,6 @@ func Menu() {
 		fmt.Println("1")
 		os.Exit(0)
 	}
+	time.Sleep(1 * time.Second)
 	Menu()
 }
