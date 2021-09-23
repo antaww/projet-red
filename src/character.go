@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 type Personnage struct {
@@ -29,20 +30,28 @@ func InitCharacter() {
 
 func (p *Personnage) takePot() {
 	for range p.inventaire {
-		if p.inventaire["potion"] >= 1 {
+		if p.inventaire["Potion"] >= 1 {
 			if p.HP == p.maxHP {
 				fmt.Println("Vous êtes full, ne pas utiliser la potion")
 			} else if p.HP+50 > p.maxHP {
 				p.HP += +(p.maxHP - p.HP)
-				p.inventaire["potion"] -= 1
+				p.inventaire["Potion"] -= 1
 				fmt.Println(p.nom, "a utilisé une potion")
 			} else {
 				p.HP += +50
-				p.inventaire["potion"] -= 1
+				p.inventaire["Potion"] -= 1
 				fmt.Println(p.nom, "a utilisé une potion")
 			}
 			break
 		}
+	}
+}
+
+func (p *Personnage) poisonPot() {
+	for i := 1; i <= 3; i++ {
+		p.HP = p.HP - 10
+		fmt.Println(p.HP, "/", p.maxHP)
+		time.Sleep(1 * time.Second)
 	}
 }
 
