@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-type personnage struct {
+type Personnage struct {
 	nom        string
 	classe     string
 	niveau     int
@@ -11,7 +11,7 @@ type personnage struct {
 	inventaire []string
 }
 
-func (p *personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire []string) {
+func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire []string) {
 	p.nom = nom
 	p.classe = classe
 	p.niveau = niveau
@@ -20,17 +20,7 @@ func (p *personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.inventaire = inventaire
 }
 
-func main() {
-	var p1 personnage
-	p1.Init("Antoine", "Elfe", 1, 100, 40, []string{"potion", "potion", "potion"})
-	p1.DisplayInfo()
-	p1.accesInventory()
-	p1.takePot()
-	p1.DisplayInfo()
-	p1.accesInventory()
-}
-
-func (p *personnage) takePot() {
+func (p *Personnage) takePot() {
 	for i := range p.inventaire {
 		if p.inventaire[i] == "potion" {
 			if p.HP == p.maxHP {
@@ -49,7 +39,7 @@ func (p *personnage) takePot() {
 	}
 }
 
-func (p *personnage) accesInventory() {
+func (p *Personnage) accesInventory() {
 	for i := range p.inventaire {
 		if i >= 0 {
 			fmt.Println("Item", i+1, ":", p.inventaire[i])
@@ -59,17 +49,17 @@ func (p *personnage) accesInventory() {
 	}
 }
 
-func (p *personnage) removeInventory(item string) {
+func (p *Personnage) removeInventory(item string) {
 	inv := &p.inventaire
 	for i := range p.inventaire {
 		if p.inventaire[i] == item {
 			*inv = append(p.inventaire[:i], p.inventaire[i+1:]...)
 		}
 	}
-	p1.accesInventory()
+	p.accesInventory()
 }
 
-func (p personnage) DisplayInfo() {
+func (p Personnage) DisplayInfo() {
 	fmt.Println("Nom :", p.nom)
 	fmt.Println("Classe :", p.classe)
 	fmt.Println("Niveau :", p.niveau)
