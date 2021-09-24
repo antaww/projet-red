@@ -14,10 +14,11 @@ type Personnage struct {
 	HP         int
 	inventaire map[string]int
 	alive      bool
-	p.skill map[string]int
+	skill map[string]int
+	money int
 }
 
-func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool, skill map[string]int) {
+func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool, skill map[string]int, money int) {
 	p.nom = nom
 	p.classe = classe
 	p.niveau = niveau
@@ -25,11 +26,12 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.HP = HP
 	p.inventaire = inventaire
 	p.alive = alive
+	p.money = money
 	p.skill = skill
 }
 
 func InitCharacter() {
-	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true, map[string]int{"Coup de poing": 1})
+	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true, map[string]int{"Coup de poing": 1}, 100)
 }
 
 func (p *Personnage) takePot() {
@@ -102,7 +104,7 @@ func (p *Personnage) Marchand() {
 	//Affichage choix menu
 	fmt.Println("1 >> Acheter potion de soin (gratuite)")
 	fmt.Println("2 >> Achetr potion de poison (gratuite)")
-	fmt.Println("2 >> Retour au menu principal")
+	fmt.Println("3 >> Retour au menu principal")
 	o, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	o = strings.Replace(o, "\r\n", "", -1)
 	switch o {
@@ -125,4 +127,5 @@ func (p Personnage) DisplayInfo() {
 	fmt.Println("Niveau :", p.niveau)
 	fmt.Println("HP max :", p.maxHP)
 	fmt.Println("HP actuels :", p.HP)
+	fmt.Println("Argent :", p.money)
 }
