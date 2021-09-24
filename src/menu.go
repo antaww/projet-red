@@ -22,6 +22,7 @@ func Menu() {
 	case "2":
 		fmt.Println(">> Inventaire d'", P1.nom, "<<")
 		P1.accesInventory()
+		P1.useInventory()
 	case "3":
 		fmt.Println(">> Marchand <<")
 		P1.Marchand()

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -67,10 +68,16 @@ func (p *Personnage) dead() {
 }
 
 func (p *Personnage) poisonPot() {
-	for i := 1; i <= 3; i++ {
-		p.HP = p.HP - 10
-		fmt.Println(p.HP, "/", p.maxHP)
-		time.Sleep(1 * time.Second)
+	if p.inventaire["Potion de poison"] >= 1 {
+		p.inventaire["Potion de poison"] -= 1
+		for i := 1; i <= 3; i++ {
+			p.HP = p.HP - 10
+			fmt.Println("HP :", p.HP, "/", p.maxHP)
+			time.Sleep(1 * time.Second)
+			if p.HP == 0 {
+				p.dead()
+			}
+		}
 	}
 }
 
@@ -99,6 +106,35 @@ func (p *Personnage) accesInventory() {
 	}
 }
 
+func (p *Personnage) useInventory() {
+	//Affichage choix menu
+	fmt.Println("1 >> Utiliser potion de soin")
+	fmt.Println("2 >> Utiliser potion de poison")
+	fmt.Println("3 >> Utiliser livre de sort : boule de feu")
+	fmt.Println("4 >> Retour au menu principal")
+	i, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
+	i = strings.Replace(i, "\r\n", "", -1)
+	switch i {
+	case "1":
+		fmt.Println(">> Une potion de soin a été utilisée par", p.nom, "<<")
+		p.takePot()
+	case "2":
+		if p.inventaire["Potion de poison"] >= 1 {
+			fmt.Println(">> Une potion de poison a été utilisée par", p.nom, "<<")
+			p.poisonPot()
+		} else {
+			fmt.Println(">> Vous n'avez aucune potion de poison ! <<")
+		}
+	case "3":
+		fmt.Println(">> Le livre de sort boule de feu a été utilisé par", p.nom, "<<")
+		p.spellBook()
+	case "4":
+		fmt.Println(">> Retour au menu en cours... <<")
+		time.Sleep(1 * time.Second)
+		Menu()
+	}
+}
+
 func (p Personnage) DisplayInfo() {
 	fmt.Println("Nom :", p.nom)
 	fmt.Println("Classe :", p.classe)
@@ -106,5 +142,7 @@ func (p Personnage) DisplayInfo() {
 	fmt.Println("HP max :", p.maxHP)
 	fmt.Println("HP actuels :", p.HP)
 	fmt.Println("Argent :", p.money)
-	fmt.Println("Skill :", p.skill)
+	for key, val := range p.skill {
+		fmt.Println(key, ":", val)
+	}
 }

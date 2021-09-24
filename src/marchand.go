@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strings"
 	"time"
 )
@@ -28,6 +27,6 @@ func (p *Personnage) Marchand() {
 	case "4":
 		fmt.Println(">> Retour au menu en cours... <<")
 		time.Sleep(1 * time.Second)
-		os.Exit(0)
+		Menu()
 	}
 }
