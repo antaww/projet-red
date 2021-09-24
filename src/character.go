@@ -14,9 +14,10 @@ type Personnage struct {
 	HP         int
 	inventaire map[string]int
 	alive      bool
+	money      int
 }
 
-func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool) {
+func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool, money int) {
 	p.nom = nom
 	p.classe = classe
 	p.niveau = niveau
@@ -24,10 +25,11 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.HP = HP
 	p.inventaire = inventaire
 	p.alive = alive
+	p.money = money
 }
 
 func InitCharacter() {
-	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true)
+	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true, 100)
 }
 
 func (p *Personnage) takePot() {
@@ -103,4 +105,5 @@ func (p Personnage) DisplayInfo() {
 	fmt.Println("Niveau :", p.niveau)
 	fmt.Println("HP max :", p.maxHP)
 	fmt.Println("HP actuels :", p.HP)
+	fmt.Println("Argent :", p.money)
 }
