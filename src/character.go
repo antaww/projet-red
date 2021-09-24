@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"time"
 )
@@ -14,8 +15,8 @@ type Personnage struct {
 	HP         int
 	inventaire map[string]int
 	alive      bool
-	skill map[string]int
-	money int
+	skill      map[string]int
+	money      int
 }
 
 func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool, skill map[string]int, money int) {
@@ -102,9 +103,10 @@ func (p *Personnage) accesInventory() {
 
 func (p *Personnage) Marchand() {
 	//Affichage choix menu
-	fmt.Println("1 >> Acheter potion de soin (gratuite)")
-	fmt.Println("2 >> Achetr potion de poison (gratuite)")
-	fmt.Println("3 >> Retour au menu principal")
+	fmt.Println("1 >> Acheter potion de soin")
+	fmt.Println("2 >> Acheter potion de poison")
+	fmt.Println("3 >> Acheter livre de sort : boule de feu")
+	fmt.Println("4 >> Retour au menu principal")
 	o, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	o = strings.Replace(o, "\r\n", "", -1)
 	switch o {
@@ -115,7 +117,10 @@ func (p *Personnage) Marchand() {
 		fmt.Println(">> Une potion de poison a été achetée par", p.nom, "<<")
 		P.FreePoisonPotion()
 	case "3":
-		fmt.Println(">> Retour au menu en cours... <<"
+		fmt.Println(">> Le livre de sort boule de feu a été acheté par", p.nom, "<<")
+		P.spellBook()
+	case "4":
+		fmt.Println(">> Retour au menu en cours... <<")
 		time.Sleep(1 * time.Second)
 		os.Exit(0)
 	}
