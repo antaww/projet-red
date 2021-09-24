@@ -7,6 +7,28 @@ import (
 	"time"
 )
 
+func CloseGame() {
+	fmt.Println(">> Fermeture du jeu. <<")
+	time.Sleep(300 * time.Millisecond)
+	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	fmt.Println(">> Fermeture du jeu.. <<")
+	time.Sleep(300 * time.Millisecond)
+	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	fmt.Println(">> Fermeture du jeu... <<")
+	time.Sleep(300 * time.Millisecond)
+	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	fmt.Println(">> Fermeture du jeu. <<")
+	time.Sleep(300 * time.Millisecond)
+	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	fmt.Println(">> Fermeture du jeu.. <<")
+	time.Sleep(300 * time.Millisecond)
+	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	fmt.Println(">> Fermeture du jeu... <<")
+	time.Sleep(300 * time.Millisecond)
+	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	os.Exit(0)
+}
+
 func Menu() {
 	//Affichage choix menu
 	fmt.Println("1 >> Afficher les infos du personnage")
@@ -27,14 +49,7 @@ func Menu() {
 		fmt.Println(">> Marchand <<")
 		P1.Marchand()
 	case "4":
-		fmt.Println(">> Fermeture du jeu... <<")
-		time.Sleep(1 * time.Second)
-		fmt.Println("3")
-		time.Sleep(1 * time.Second)
-		fmt.Println("2")
-		time.Sleep(1 * time.Second)
-		fmt.Println("1")
-		os.Exit(0)
+		CloseGame()
 	}
 	time.Sleep(1 * time.Second)
 	Menu()

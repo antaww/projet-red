@@ -8,7 +8,7 @@ import (
 
 func (p *Personnage) Marchand() {
 	//Affichage choix menu
-	fmt.Println("1 >> Acheter potion de soin")
+	fmt.Println("1 >> Acheter potion de soin (3 coins)")
 	fmt.Println("2 >> Acheter potion de poison")
 	fmt.Println("3 >> Acheter livre de sort : boule de feu")
 	fmt.Println("4 >> Retour au menu principal")
@@ -16,8 +16,14 @@ func (p *Personnage) Marchand() {
 	o = strings.Replace(o, "\r\n", "", -1)
 	switch o {
 	case "1":
-		fmt.Println(">> Une potion de soin a été achetée par", p.nom, "<<")
-		p.FreeHealPotion()
+		if p.money > 0 {
+			p.money -= 3
+			p.FreeHealPotion()
+			fmt.Println(">> Une potion de soin a été achetée par", p.nom, "<<")
+		} else {
+			fmt.Println(">> Vous n'avez plus d'argent ! <<")
+		}
+
 	case "2":
 		fmt.Println(">> Une potion de poison a été achetée par", p.nom, "<<")
 		p.FreePoisonPotion()
