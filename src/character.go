@@ -83,7 +83,8 @@ func (p *Personnage) poisonPot() {
 
 func (p *Personnage) spellBook() {
 	if p.skill["Boule de feu"] == 0 {
-		p.inventaire["Boule de feu"] += 1
+		p.skill["Boule de feu"] += 1
+		p.inventaire["Livre de sort : boule de feu"] -= 1
 	} else {
 		fmt.Println("Une seule boule de feu à la fois !")
 	}
@@ -95,6 +96,10 @@ func (p *Personnage) FreeHealPotion() {
 
 func (p *Personnage) FreePoisonPotion() {
 	p.inventaire["Potion de poison"] += 1
+}
+
+func (p *Personnage) FreeSpeelBook() {
+	p.inventaire["Livre de sort : boule de feu"] += 1
 }
 
 func (p *Personnage) accesInventory() {
@@ -126,8 +131,17 @@ func (p *Personnage) useInventory() {
 			fmt.Println(">> Vous n'avez aucune potion de poison ! <<")
 		}
 	case "3":
-		fmt.Println(">> Le livre de sort boule de feu a été utilisé par", p.nom, "<<")
-		p.spellBook()
+		if p.inventaire["Livre de sort : boule de feu"] >= 1 && p.skill["Boule de feu"] == 1 {
+			fmt.Println(">> Impossible d'avoir plusieurs boules de feu ! <<")
+		}
+		if p.inventaire["Livre de sort : boule de feu"] >= 1 && p.skill["Boule de feu"] == 0 {
+			fmt.Println(">> Le livre de sort boule de feu a été utilisé par", p.nom, "<<")
+			fmt.Println(">>", p.nom, "a appris boule de feu ! <<")
+			p.spellBook()
+		}
+		if p.inventaire["Livre de sort : boule de feu"] == 0 {
+			fmt.Println(">> Vous n'avez pas de livre de sort ! <<")
+		}
 	case "4":
 		fmt.Println(">> Retour au menu en cours... <<")
 		time.Sleep(1 * time.Second)
@@ -142,7 +156,8 @@ func (p Personnage) DisplayInfo() {
 	fmt.Println("HP max :", p.maxHP)
 	fmt.Println("HP actuels :", p.HP)
 	fmt.Println("Argent :", p.money)
-	for key, val := range p.skill {
-		fmt.Println(key, ":", val)
+	fmt.Println("Compétences :")
+	for key := range p.skill {
+		fmt.Println("\t", key)
 	}
 }

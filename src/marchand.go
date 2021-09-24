@@ -23,7 +23,7 @@ func (p *Personnage) Marchand() {
 		p.FreePoisonPotion()
 	case "3":
 		fmt.Println(">> Le livre de sort boule de feu a été acheté par", p.nom, "<<")
-		p.spellBook()
+		p.FreeSpeelBook()
 	case "4":
 		fmt.Println(">> Retour au menu en cours... <<")
 		time.Sleep(1 * time.Second)
