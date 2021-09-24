@@ -90,16 +90,9 @@ func (p *Personnage) spellBook() {
 	}
 }
 
-func (p *Personnage) FreeHealPotion() {
-	p.inventaire["Potion"] += 1
-}
-
-func (p *Personnage) FreePoisonPotion() {
-	p.inventaire["Potion de poison"] += 1
-}
-
-func (p *Personnage) FreeSpeelBook() {
-	p.inventaire["Livre de sort : boule de feu"] += 1
+func (p *Personnage) GiveItem(item string) {
+	p.inventaire[item] += 1
+	//ici pas de print "a été acheté" pour éviter les fautes d'orthographe
 }
 
 func (p *Personnage) accesInventory() {
