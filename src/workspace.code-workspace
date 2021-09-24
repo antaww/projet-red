@@ -1,9 +1,11 @@
 {
 	"folders": [
 		{
-			"path": "..\\..\\clone"
+			"name": "Projet_Rouge2",
+			"path": "..\\..\\Projet_Rouge2"
 		},
 		{
+			"name": "Projet_Rouge",
 			"path": ".."
 		}
 	],

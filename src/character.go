@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strings"
 	"time"
 )
 
@@ -28,11 +26,7 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.inventaire = inventaire
 	p.alive = alive
 	p.money = money
-<<<<<<< HEAD
-
-=======
 	p.skill = skill
->>>>>>> 5fa8123cc034942e29270b35f60084654e625189
 }
 
 func InitCharacter() {
@@ -105,31 +99,6 @@ func (p *Personnage) accesInventory() {
 	}
 }
 
-func (p *Personnage) Marchand() {
-	//Affichage choix menu
-	fmt.Println("1 >> Acheter potion de soin")
-	fmt.Println("2 >> Acheter potion de poison")
-	fmt.Println("3 >> Acheter livre de sort : boule de feu")
-	fmt.Println("4 >> Retour au menu principal")
-	o, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
-	o = strings.Replace(o, "\r\n", "", -1)
-	switch o {
-	case "1":
-		fmt.Println(">> Une potion de soin a été achetée par", p.nom, "<<")
-		P.FreeHealPotion()
-	case "2":
-		fmt.Println(">> Une potion de poison a été achetée par", p.nom, "<<")
-		P.FreePoisonPotion()
-	case "3":
-		fmt.Println(">> Le livre de sort boule de feu a été acheté par", p.nom, "<<")
-		P.spellBook()
-	case "4":
-		fmt.Println(">> Retour au menu en cours... <<")
-		time.Sleep(1 * time.Second)
-		os.Exit(0)
-	}
-}
-
 func (p Personnage) DisplayInfo() {
 	fmt.Println("Nom :", p.nom)
 	fmt.Println("Classe :", p.classe)
@@ -137,4 +106,5 @@ func (p Personnage) DisplayInfo() {
 	fmt.Println("HP max :", p.maxHP)
 	fmt.Println("HP actuels :", p.HP)
 	fmt.Println("Argent :", p.money)
+	fmt.Println("Skill :", p.skill)
 }
