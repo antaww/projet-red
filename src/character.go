@@ -14,9 +14,10 @@ type Personnage struct {
 	HP         int
 	inventaire map[string]int
 	alive      bool
+	p.skill map[string]int
 }
 
-func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool) {
+func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool, skill map[string]int) {
 	p.nom = nom
 	p.classe = classe
 	p.niveau = niveau
@@ -24,10 +25,11 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.HP = HP
 	p.inventaire = inventaire
 	p.alive = alive
+	p.skill = skill
 }
 
 func InitCharacter() {
-	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true)
+	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true, map[string]int{"Coup de poing": 1})
 }
 
 func (p *Personnage) takePot() {
@@ -71,8 +73,20 @@ func (p *Personnage) poisonPot() {
 	}
 }
 
+func (p *Personnage) spellBook() {
+	if p.skill["Boule de feu"] == 0 {
+		p.inventaire["Boule de feu"] += 1
+	} else {
+		fmt.Println("Une seule boule de feu à la fois !")
+	}
+}
+
 func (p *Personnage) FreeHealPotion() {
 	p.inventaire["Potion"] += 1
+}
+
+func (p *Personnage) FreePoisonPotion() {
+	p.inventaire["Potion de poison"] += 1
 }
 
 func (p *Personnage) accesInventory() {
@@ -87,13 +101,21 @@ func (p *Personnage) accesInventory() {
 func (p *Personnage) Marchand() {
 	//Affichage choix menu
 	fmt.Println("1 >> Acheter potion de soin (gratuite)")
+	fmt.Println("2 >> Achetr potion de poison (gratuite)")
 	fmt.Println("2 >> Retour au menu principal")
 	o, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	o = strings.Replace(o, "\r\n", "", -1)
 	switch o {
 	case "1":
-		fmt.Println(">> Une potion de soin a été achetée par", P1.nom, "<<")
-		P1.FreeHealPotion()
+		fmt.Println(">> Une potion de soin a été achetée par", p.nom, "<<")
+		P.FreeHealPotion()
+	case "2":
+		fmt.Println(">> Une potion de poison a été achetée par", p.nom, "<<")
+		P.FreePoisonPotion()
+	case "3":
+		fmt.Println(">> Retour au menu en cours... <<"
+		time.Sleep(1 * time.Second)
+		os.Exit(0)
 	}
 }
 
