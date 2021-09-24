@@ -26,6 +26,7 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.inventaire = inventaire
 	p.alive = alive
 	p.money = money
+
 }
 
 func InitCharacter() {
