@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"time"
 )
@@ -19,8 +20,14 @@ func (p *Personnage) MoneyCheck(prix int) bool { //vérifier si le joueur a de q
 	return false
 }
 
+func (p *Personnage) GiveItem(item string) {
+	p.inventaire[item] += 1
+	//ici pas de print "a été acheté" pour éviter les fautes d'orthographe
+}
+
 func (p *Personnage) Marchand() {
 	//Affichage choix menu
+	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
 	fmt.Println("1 >> Acheter potion de soin (3 coins)")
 	fmt.Println("2 >> Acheter potion de poison (6 coins)")
 	fmt.Println("3 >> Acheter livre de sort : boule de feu (25 coins)")
@@ -28,7 +35,7 @@ func (p *Personnage) Marchand() {
 	fmt.Println("5 >> Acheter peau de troll (7 coins)")
 	fmt.Println("6 >> Acheter cuir de sanglier (3 coins)")
 	fmt.Println("7 >> Acheter plume de corbeau (1 coin)")
-	fmt.Println("8 >> Retour au menu principal")
+	fmt.Println("8 >> Options")
 	o, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	o = strings.Replace(o, "\r\n", "", -1)
 	switch o {
@@ -42,6 +49,7 @@ func (p *Personnage) Marchand() {
 		if p.MoneyCheck(6) {
 			p.GiveItem("Potion de poison")
 			fmt.Println(">> Une potion de poison a été acheté par", p.nom, "<<")
+
 		}
 
 	case "3":
@@ -75,8 +83,8 @@ func (p *Personnage) Marchand() {
 		}
 
 	case "8":
-		fmt.Println(">> Retour au menu en cours... <<")
-		time.Sleep(1 * time.Second)
-		Menu()
+		Options()
 	}
+	time.Sleep(2 * time.Second)
+	p.Marchand()
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"time"
 )
 
@@ -34,25 +33,6 @@ func InitCharacter() {
 	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true, map[string]int{"Coup de poing": 1}, 100)
 }
 
-func (p *Personnage) takePot() {
-	for range p.inventaire {
-		if p.inventaire["Potion"] >= 1 {
-			if p.HP == p.maxHP {
-				fmt.Println("Vous êtes full, ne pas utiliser la potion")
-			} else if p.HP+50 > p.maxHP {
-				p.HP += +(p.maxHP - p.HP)
-				p.inventaire["Potion"] -= 1
-				fmt.Println(p.nom, "a utilisé une potion")
-			} else {
-				p.HP += +50
-				p.inventaire["Potion"] -= 1
-				fmt.Println(p.nom, "a utilisé une potion")
-			}
-			break
-		}
-	}
-}
-
 func (p *Personnage) dead() {
 	if p.HP == 0 {
 		p.alive = false
@@ -67,82 +47,8 @@ func (p *Personnage) dead() {
 	}
 }
 
-func (p *Personnage) poisonPot() {
-	if p.inventaire["Potion de poison"] >= 1 {
-		p.inventaire["Potion de poison"] -= 1
-		for i := 1; i <= 3; i++ {
-			p.HP = p.HP - 10
-			fmt.Println("HP :", p.HP, "/", p.maxHP)
-			time.Sleep(1 * time.Second)
-			if p.HP == 0 {
-				p.dead()
-			}
-		}
-	}
-}
-
-func (p *Personnage) spellBook() {
-	if p.skill["Boule de feu"] == 0 {
-		p.skill["Boule de feu"] += 1
-		p.inventaire["Livre de sort : boule de feu"] -= 1
-	} else {
-		fmt.Println("Une seule boule de feu à la fois !")
-	}
-}
-
-func (p *Personnage) GiveItem(item string) {
-	p.inventaire[item] += 1
-	//ici pas de print "a été acheté" pour éviter les fautes d'orthographe
-}
-
-func (p *Personnage) accesInventory() {
-	for key, val := range p.inventaire {
-		fmt.Println(key, ":", val)
-	}
-	if len(p.inventaire) == 0 {
-		fmt.Println("Votre inventaire est vide")
-	}
-}
-
-func (p *Personnage) useInventory() {
-	//Affichage choix menu
-	fmt.Println("1 >> Utiliser potion de soin")
-	fmt.Println("2 >> Utiliser potion de poison")
-	fmt.Println("3 >> Utiliser livre de sort : boule de feu")
-	fmt.Println("4 >> Retour au menu principal")
-	i, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
-	i = strings.Replace(i, "\r\n", "", -1)
-	switch i {
-	case "1":
-		fmt.Println(">> Une potion de soin a été utilisée par", p.nom, "<<")
-		p.takePot()
-	case "2":
-		if p.inventaire["Potion de poison"] >= 1 {
-			fmt.Println(">> Une potion de poison a été utilisée par", p.nom, "<<")
-			p.poisonPot()
-		} else {
-			fmt.Println(">> Vous n'avez aucune potion de poison ! <<")
-		}
-	case "3":
-		if p.inventaire["Livre de sort : boule de feu"] >= 1 && p.skill["Boule de feu"] == 1 {
-			fmt.Println(">> Impossible d'avoir plusieurs boules de feu ! <<")
-		}
-		if p.inventaire["Livre de sort : boule de feu"] >= 1 && p.skill["Boule de feu"] == 0 {
-			fmt.Println(">> Le livre de sort boule de feu a été utilisé par", p.nom, "<<")
-			fmt.Println(">>", p.nom, "a appris boule de feu ! <<")
-			p.spellBook()
-		}
-		if p.inventaire["Livre de sort : boule de feu"] == 0 {
-			fmt.Println(">> Vous n'avez pas de livre de sort ! <<")
-		}
-	case "4":
-		fmt.Println(">> Retour au menu en cours... <<")
-		time.Sleep(1 * time.Second)
-		Menu()
-	}
-}
-
 func (p Personnage) DisplayInfo() {
+	fmt.Println(">> Stats du personnage", P1.nom, "<<")
 	fmt.Println("Nom :", p.nom)
 	fmt.Println("Classe :", p.classe)
 	fmt.Println("Niveau :", p.niveau)
