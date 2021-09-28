@@ -8,30 +8,32 @@ import (
 )
 
 func CloseGame() {
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
 	fmt.Println(">> Fermeture du jeu. <<")
 	time.Sleep(200 * time.Millisecond)
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
 	fmt.Println(">> Fermeture du jeu.. <<")
 	time.Sleep(200 * time.Millisecond)
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
 	fmt.Println(">> Fermeture du jeu... <<")
 	time.Sleep(200 * time.Millisecond)
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
 	fmt.Println(">> Fermeture du jeu. <<")
 	time.Sleep(200 * time.Millisecond)
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
 	fmt.Println(">> Fermeture du jeu.. <<")
 	time.Sleep(200 * time.Millisecond)
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
 	fmt.Println(">> Fermeture du jeu... <<")
 	time.Sleep(200 * time.Millisecond)
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
 	os.Exit(0)
 }
 
 func Menu() {
 	//Affichage choix menu
+	ClearLog()
+	fmt.Println(">> Accueil <<")
 	fmt.Println("1 >> Afficher les infos du personnage")
 	fmt.Println("2 >> Afficher l'inventaire du personnage")
 	fmt.Println("3 >> Aller chez le marchand")
@@ -41,21 +43,19 @@ func Menu() {
 	m = strings.Replace(m, "\r\n", "", -1)
 	switch m {
 	case "1":
-		os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+		ClearLog()
 		P1.DisplayInfo()
 		Options()
 	case "2":
-		os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+		ClearLog()
 		P1.accesInventory()
 		P1.useInventory()
 		Options()
 	case "3":
-		os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
-		fmt.Println(">> Marchand <<")
+		ClearLog()
 		P1.Marchand()
 	case "4":
-		os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
-		fmt.Println(">> Forgeron <<")
+		ClearLog()
 		P1.Forgeron()
 	case "5":
 		CloseGame()
@@ -71,7 +71,7 @@ func Options() {
 	c = strings.Replace(c, "\r\n", "", -1)
 	switch c {
 	case "1":
-		os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+		ClearLog()
 		time.Sleep(200 * time.Millisecond)
 		Menu()
 	case "2":

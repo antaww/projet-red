@@ -2,13 +2,11 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strings"
-	"time"
 )
 
 func (p *Personnage) accesInventory() {
-	fmt.Println(">> Inventaire d'", P1.nom, "<<")
+	fmt.Println(">> Inventaire de", P1.nom, "<<")
 	for key, val := range p.inventaire {
 		fmt.Println(key, ":", val)
 	}
@@ -22,7 +20,10 @@ func (p *Personnage) useInventory() {
 	fmt.Println("1 >> Utiliser potion de soin")
 	fmt.Println("2 >> Utiliser potion de poison")
 	fmt.Println("3 >> Utiliser livre de sort : boule de feu")
-	fmt.Println("4 >> Options")
+	fmt.Println("4 >> Equiper le chapeau de l'aventurier")
+	fmt.Println("5 >> Equiper la tunique de l'aventurier")
+	fmt.Println("6 >> Equiper les bottes de l'aventurier")
+	fmt.Println("7 >> Options")
 	i, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	i = strings.Replace(i, "\r\n", "", -1)
 	switch i {
@@ -48,10 +49,17 @@ func (p *Personnage) useInventory() {
 			fmt.Println(">> Vous n'avez pas de livre de sort ! <<")
 		}
 	case "4":
+		p.EquipArmor("Chapeau de l'aventurier", 10)
+	case "5":
+		p.EquipArmor("Tunique de l'aventurier", 25)
+	case "6":
+		p.EquipArmor("Bottes de l'aventurier", 15)
+	case "7":
 		Options()
 	}
-	time.Sleep(2 * time.Second)
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	fmt.Println(">> Appuyez sur entrée pour continuer... ")
+	Input()
+	ClearLog()
 	P1.accesInventory()
 	P1.useInventory()
 }

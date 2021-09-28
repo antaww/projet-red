@@ -15,9 +15,11 @@ type Personnage struct {
 	alive      bool
 	skill      map[string]int
 	money      int
+	equipment  Equipment
 }
 
-func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool, skill map[string]int, money int) {
+func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP int, inventaire map[string]int, alive bool,
+	skill map[string]int, money int, equiptete string, equiptorse string, equippieds string) {
 	p.nom = nom
 	p.classe = classe
 	p.niveau = niveau
@@ -25,12 +27,16 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 	p.HP = HP
 	p.inventaire = inventaire
 	p.alive = alive
-	p.money = money
 	p.skill = skill
+	p.money = money
+	p.equipment.equiptete = equiptete
+	p.equipment.equiptorse = equiptorse
+	p.equipment.equippieds = equippieds
 }
 
 func InitCharacter() {
-	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{"Potion": 3}, true, map[string]int{"Coup de poing": 1}, 100)
+	P1.Init("Antoine", "Elfe", 1, 100, 40, map[string]int{potionSoin: 3}, true, map[string]int{"Coup de poing": 1}, 100,
+		"Casque", "Plastron", "Bottes")
 }
 
 func (p *Personnage) dead() {
@@ -48,7 +54,7 @@ func (p *Personnage) dead() {
 }
 
 func (p Personnage) DisplayInfo() {
-	fmt.Println(">> Stats du personnage", P1.nom, "<<")
+	fmt.Println(">> Stats de", p.nom, "<<")
 	fmt.Println("Nom :", p.nom)
 	fmt.Println("Classe :", p.classe)
 	fmt.Println("Niveau :", p.niveau)

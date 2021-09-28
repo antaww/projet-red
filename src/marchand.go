@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strings"
-	"time"
 )
 
 func (p *Personnage) MoneyCheck(prix int) bool { //vérifier si le joueur a de quoi payer puis payer
@@ -27,7 +25,9 @@ func (p *Personnage) GiveItem(item string) {
 
 func (p *Personnage) Marchand() {
 	//Affichage choix menu
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
+	ClearLog()
+	fmt.Println(">> Marchand <<")
+	fmt.Println(">> Vous avez", p.money, "coins ! <<")
 	fmt.Println("1 >> Acheter potion de soin (3 coins)")
 	fmt.Println("2 >> Acheter potion de poison (6 coins)")
 	fmt.Println("3 >> Acheter livre de sort : boule de feu (25 coins)")
@@ -41,7 +41,7 @@ func (p *Personnage) Marchand() {
 	switch o {
 	case "1":
 		if p.MoneyCheck(3) {
-			p.GiveItem("Potion")
+			p.GiveItem(potionSoin)
 			fmt.Println(">> Une potion de soin a été acheté par", p.nom, "<<")
 		}
 
@@ -85,6 +85,7 @@ func (p *Personnage) Marchand() {
 	case "8":
 		Options()
 	}
-	time.Sleep(2 * time.Second)
+	fmt.Println(">> Appuyez sur entrée pour continuer... ")
+	Input()
 	p.Marchand()
 }

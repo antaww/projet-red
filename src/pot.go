@@ -7,24 +7,24 @@ import (
 
 func (p *Personnage) takePot() {
 	for range p.inventaire {
-		if p.inventaire["Potion"] == 0 {
+		if p.inventaire[potionSoin] == 0 {
 			fmt.Println(">> Vous n'avez pas de potion de soin... <<")
 		}
-		if p.inventaire["Potion"] >= 1 {
+		if p.inventaire[potionSoin] >= 1 {
 			if p.HP == p.maxHP {
 				fmt.Println(">> Vos HP sont full, ne pas utiliser la potion <<")
 			}
 			if p.HP != p.maxHP {
 				if p.HP+50 > p.maxHP {
 					p.HP += (p.maxHP - p.HP)
-					p.inventaire["Potion"] -= 1
+					p.inventaire[potionSoin] -= 1
 					fmt.Println(">> Une potion de soin a été utilisée par", p.nom, "<<")
 					fmt.Println("HP :", p.HP, "/", p.maxHP)
 				}
 			}
-			if p.HP+50 < p.maxHP {
+			if p.HP+50 <= p.maxHP {
 				p.HP += +50
-				p.inventaire["Potion"] -= 1
+				p.inventaire[potionSoin] -= 1
 				fmt.Println(">> Une potion de soin a été utilisée par", p.nom, "<<")
 				fmt.Println("HP :", p.HP, "/", p.maxHP)
 			}
