@@ -54,7 +54,7 @@ func charCreation() {
 	fmt.Println(">> Vous êtes désormais un", classe, "! <<")
 	fmt.Println(">> Appuyez sur entrée pour continuer... ")
 	Input()
-	P1.Init(nom, classe, 1, maxHP, HP, map[string]int{"Potion de soin": 3}, true, map[string]int{"Coup de poing": 1}, 100,
+	P1.Init(Purple+nom+Reset, classe, 1, maxHP, HP, 5, map[string]int{"Potion de soin": 3}, true, map[string]int{"Coup de poing": 1}, 100,
 		"Casque", "Plastron", "Bottes")
 
 }

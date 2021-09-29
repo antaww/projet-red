@@ -38,7 +38,8 @@ func Menu() {
 	fmt.Println("2 >> Afficher l'inventaire du personnage")
 	fmt.Println("3 >> Aller chez le marchand")
 	fmt.Println("4 >> Aller chez le forgeron")
-	fmt.Println("5 >> Quitter le jeu")
+	fmt.Println("5 >> Zone de combat")
+	fmt.Println(BIWhite + "6 >> Quitter le jeu" + Reset)
 	m, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	m = strings.Replace(m, "\r\n", "", -1)
 	switch m {
@@ -49,7 +50,7 @@ func Menu() {
 	case "2":
 		ClearLog()
 		P1.accesInventory()
-		P1.useInventory()
+		P1.useInventory(false)
 		Options()
 	case "3":
 		ClearLog()
@@ -58,6 +59,8 @@ func Menu() {
 		ClearLog()
 		P1.Forgeron()
 	case "5":
+		trainingFight()
+	case "6":
 		CloseGame()
 	}
 }
@@ -66,7 +69,7 @@ func Options() {
 	fmt.Println()
 	fmt.Println(">> Options <<")
 	fmt.Println("1 >> Retour au menu principal")
-	fmt.Println("2 >> Quitter le jeu")
+	fmt.Println(BIWhite + "2 >> Quitter le jeu" + Reset)
 	c, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	c = strings.Replace(c, "\r\n", "", -1)
 	switch c {

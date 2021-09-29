@@ -6,7 +6,12 @@ import (
 )
 
 func (p *Personnage) accesInventory() {
-	fmt.Println(">> Inventaire de", P1.nom, "<<")
+	runeName := []rune(p.nom)
+	if runeName[0] == 'A' || runeName[0] == 'E' || runeName[0] == 'I' || runeName[0] == 'O' || runeName[0] == 'U' {
+		fmt.Print(">> Inventaire d'", P1.nom, " <<\n")
+	} else {
+		fmt.Print(">> Inventaire de ", P1.nom, " <<\n")
+	}
 	for key, val := range p.inventaire {
 		fmt.Println(key, ":", val)
 	}
@@ -15,7 +20,7 @@ func (p *Personnage) accesInventory() {
 	}
 }
 
-func (p *Personnage) useInventory() {
+func (p *Personnage) useInventory(inFight bool) {
 	//Affichage choix menu
 	fmt.Println("1 >> Utiliser potion de soin")
 	fmt.Println("2 >> Utiliser potion de poison")
@@ -60,6 +65,8 @@ func (p *Personnage) useInventory() {
 	fmt.Println(">> Appuyez sur entrée pour continuer... ")
 	Input()
 	ClearLog()
-	P1.accesInventory()
-	P1.useInventory()
+	if inFight == false {
+		P1.accesInventory()
+		P1.useInventory(false)
+	}
 }
