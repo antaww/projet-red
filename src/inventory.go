@@ -13,7 +13,7 @@ func (p *Personnage) accesInventory() {
 		fmt.Print(">> Inventaire de ", P1.nom, " <<\n")
 	}
 	for key, val := range p.inventaire {
-		fmt.Println(key, ":", val)
+		fmt.Println(">>", key, ":", val)
 	}
 	if len(p.inventaire) == 0 {
 		fmt.Println("Votre inventaire est vide")
@@ -49,8 +49,7 @@ func (p *Personnage) useInventory(inFight bool) {
 			fmt.Println(">> Le livre de sort boule de feu a été utilisé par", p.nom, "<<")
 			fmt.Println(">>", p.nom, "a appris boule de feu ! <<")
 			p.spellBook()
-		}
-		if p.inventaire["Livre de sort : boule de feu"] == 0 {
+		} else if p.inventaire["Livre de sort : boule de feu"] == 0 {
 			fmt.Println(">> Vous n'avez pas de livre de sort ! <<")
 		}
 	case "4":

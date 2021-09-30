@@ -37,7 +37,7 @@ func (p *Personnage) Init(nom string, classe string, niveau int, maxHP int, HP i
 }
 
 func InitCharacter() {
-	P1.Init(Purple+"Antoine"+Reset, "Elfe", 1, 100, 40, 5, map[string]int{potionSoin: 3}, true, map[string]int{"Coup de poing": 1}, 100,
+	P1.Init(BIPurple+"charTester"+Reset, "Elfe", 1, 100, 40, 5, map[string]int{potionSoin: 3}, true, map[string]int{"Coup de poing": 1, "Boule de feu": 5}, 100,
 		"Casque", "Plastron", "Bottes")
 }
 

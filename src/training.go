@@ -2,27 +2,45 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 	"time"
 )
 
 func (m *Monster) goblinPattern(tour int) {
 	attackCrit := m.attack * 2
+	rand.Seed(time.Now().UnixNano())
+	if (rand.Intn(6)) == 5 {
+		M1.HP += 10
+		fmt.Println(M1.name, "mange une pomme en or et gagne 10HP, il a maintenant", M1.HP, "HP/", M1.maxHP, "HP")
+	}
 	if tour%3 == 0 {
-		fmt.Println("le gobelin attaque en critique et fait", attackCrit, "dgt à", P1.nom)
+		fmt.Println("Le gobelin attaque en ", Yellow+"critique"+Reset, "et fait", attackCrit, "dégats à", P1.nom)
 		P1.HP -= attackCrit
 		fmt.Println(P1.nom, "a maintenant", P1.HP, "HP/", P1.maxHP, "HP")
 	} else {
-		fmt.Println("le gobelin attaque et fait", m.attack, "dgt à", P1.nom)
+		fmt.Println("Le gobelin attaque et fait", m.attack, "dégats à", P1.nom)
 		P1.HP -= m.attack
 		fmt.Println(P1.nom, "a maintenant", P1.HP, "HP/", P1.maxHP, "HP")
 	}
 }
 
 func (p Personnage) charAttack() {
-	fmt.Println(p.nom, "attaque et fait", p.attack, "dgt à", M1.name)
-	M1.HP -= p.attack
-	fmt.Println(M1.name, "a maintenant", M1.HP, "HP/", M1.maxHP, "HP")
+	ClearLog()
+	fmt.Println(">> Combat d'entraînement <<")
+	fmt.Println("1 >> Coup de poing")
+	fmt.Println("2 >> Boule de feu")
+	fmt.Println("3 >> Retour")
+	m, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
+	m = strings.Replace(m, "\r\n", "", -1)
+	switch m {
+	case "1":
+		p.usePunch()
+	case "2":
+		p.useFireball()
+	case "3":
+		p.charTurn()
+	}
 }
 
 func (p *Personnage) charTurn() {
@@ -38,7 +56,6 @@ func (p *Personnage) charTurn() {
 		fmt.Println(BIWhite + ">> Appuyez sur entrée pour retourner au combat <<" + Reset)
 		p.accesInventory()
 		p.useInventory(true)
-
 	default:
 		p.charTurn()
 	}
@@ -60,7 +77,12 @@ func trainingFight() {
 			} else {
 				fmt.Print(">> C'est au tour de ", P1.nom, " ! <<\n")
 			}
-			P1.charTurn()
+			if P1.classe == "Humain" {
+				P1.charTurn()
+			}
+			if P1.classe == "Esprit de la forêt" {
+				P1.spiritTurn()
+			}
 			time.Sleep(1 * time.Second)
 			round = false
 		} else {
@@ -77,8 +99,11 @@ func trainingFight() {
 			Input()
 			Menu()
 		}
-		if M1.HP == 0 {
+		if M1.HP <= 0 {
+			min := 1
+			max := 15
 			fmt.Println(">> ", M1.name, "est mort ! <<")
+			fmt.Println(">> Vous avez gagné", rand.Intn(max-min)+min, "! <<")
 			fmt.Println(">> Appuyez sur entrée pour continuer... ")
 			Input()
 			Menu()
