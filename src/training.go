@@ -34,8 +34,11 @@ func (p *Personnage) charTurn() {
 	case "1":
 		p.charAttack()
 	case "2":
+		ClearLog()
+		fmt.Println(BIWhite + ">> Appuyez sur entrée pour retourner au combat <<" + Reset)
 		p.accesInventory()
 		p.useInventory(true)
+
 	default:
 		p.charTurn()
 	}

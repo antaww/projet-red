@@ -24,7 +24,7 @@ func charCreation() {
 	fmt.Println(">> Entrer votre nom... <<")
 	nom := NewName()
 	nom = Capitalize(nom)
-	fmt.Println(">> Oh,", nom, "te va à merveille ! <<")
+	fmt.Println(">> Oh,", BIPurple+nom+Reset, "te va à merveille ! <<")
 	fmt.Println(">> Appuyez sur entrée pour continuer... ")
 	Input()
 	ClearLog()
@@ -54,7 +54,7 @@ func charCreation() {
 	fmt.Println(">> Vous êtes désormais un", classe, "! <<")
 	fmt.Println(">> Appuyez sur entrée pour continuer... ")
 	Input()
-	P1.Init(Purple+nom+Reset, classe, 1, maxHP, HP, 5, map[string]int{"Potion de soin": 3}, true, map[string]int{"Coup de poing": 1}, 100,
+	P1.Init(BIPurple+nom+Reset, classe, 1, maxHP, HP, 5, map[string]int{"Potion de soin": 3}, true, map[string]int{"Coup de poing": 1}, 100,
 		"Casque", "Plastron", "Bottes")
 
 }
