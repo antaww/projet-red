@@ -1,6 +1,6 @@
 package main
 
-type Equipement struct { //met le au début après la structure perso
+type Equipment struct { //met le au début après la structure perso
 	Equiptete  string
 	Equiptorse string
 	Equippieds string
@@ -15,11 +15,11 @@ type Personnage struct {
 	inventaire map[string]int
 	alive      bool
 	money      int
-	equipement Equipement
+	equipment  Equipment
 }
 
 func (p *Personnage) Init(Equiptete string, Equiptorse string, Equippieds string) { // fonction
-	p.equipement.Equiptete = Equiptete
-	p.equipement.Equiptorse = Equiptorse
-	p.equipement.Equippieds = Equippieds
+	p.equipment.Equiptete = Equiptete
+	p.equipment.Equiptorse = Equiptorse
+	p.equipment.Equippieds = Equippieds
 }
