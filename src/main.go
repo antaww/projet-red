@@ -21,12 +21,16 @@ const (
 	BIGreen  = "\033[1;92m"
 	BIWhite  = "\033[1;97m"
 	BIPurple = "\033[1;95m"
+	UWhite   = "\033[4;37m"
+	BIBlue   = "\033[1;94m"
+	BIYellow = "\033[1;93m"
 )
 
 var P1 Personnage
 var M1 Monster
 var BR *bufio.Reader
 var Debug bool
+var counterInv int = 1
 
 func main() {
 	flag.BoolVar(&Debug, "debug", false, "boot game while skipping steps")

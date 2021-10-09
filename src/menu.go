@@ -33,13 +33,14 @@ func CloseGame() {
 func Menu() {
 	//Affichage choix menu
 	ClearLog()
-	fmt.Println(">> Accueil <<")
+	fmt.Println(BIWhite + ">> Accueil <<" + Reset)
 	fmt.Println("1 >> Afficher les infos du personnage")
 	fmt.Println("2 >> Afficher l'inventaire du personnage")
 	fmt.Println("3 >> Aller chez le marchand")
 	fmt.Println("4 >> Aller chez le forgeron")
 	fmt.Println("5 >> Zone de combat")
-	fmt.Println(BIWhite + "6 >> Quitter le jeu" + Reset)
+	fmt.Println("6 >> Qui sont-ils ?")
+	fmt.Println(BIWhite + "7 >> Quitter le jeu" + Reset)
 	m, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
 	m = strings.Replace(m, "\r\n", "", -1)
 	switch m {
@@ -61,13 +62,21 @@ func Menu() {
 	case "5":
 		trainingFight()
 	case "6":
+		ClearLog()
+		fmt.Println(BIWhite + UWhite + "Les artistes cachés sont :" + Reset)
+		fmt.Println("1 - ABBA")
+		fmt.Println("2 - Spielberg")
+		Options()
+	case "7":
 		CloseGame()
+	default:
+		Menu()
 	}
 }
 
 func Options() {
 	fmt.Println()
-	fmt.Println(">> Options <<")
+	fmt.Println(BIWhite + ">> Options <<" + Reset)
 	fmt.Println("1 >> Retour au menu principal")
 	fmt.Println(BIWhite + "2 >> Quitter le jeu" + Reset)
 	c, _ := BR.ReadString('\n') //lire input joueur quand "entrée"
@@ -80,5 +89,7 @@ func Options() {
 	case "2":
 		time.Sleep(200 * time.Millisecond)
 		CloseGame()
+	default:
+		Options()
 	}
 }

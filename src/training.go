@@ -10,16 +10,17 @@ import (
 func (m *Monster) goblinPattern(tour int) {
 	attackCrit := m.attack * 2
 	rand.Seed(time.Now().UnixNano())
-	if (rand.Intn(6)) == 5 {
+	if (rand.Intn(3)) == 2 {
+		M1.maxHP += 10
 		M1.HP += 10
 		fmt.Println(M1.name, "mange une pomme en or et gagne 10HP, il a maintenant", M1.HP, "HP/", M1.maxHP, "HP")
 	}
 	if tour%3 == 0 {
-		fmt.Println("Le gobelin attaque en ", Yellow+"critique"+Reset, "et fait", attackCrit, "dégats à", P1.nom)
+		fmt.Println(M1.name, "attaque en", Yellow+"critique"+Reset, "et fait", attackCrit, "dégats à", P1.nom)
 		P1.HP -= attackCrit
 		fmt.Println(P1.nom, "a maintenant", P1.HP, "HP/", P1.maxHP, "HP")
 	} else {
-		fmt.Println("Le gobelin attaque et fait", m.attack, "dégats à", P1.nom)
+		fmt.Println(M1.name, "attaque et fait", m.attack, "dégats à", P1.nom)
 		P1.HP -= m.attack
 		fmt.Println(P1.nom, "a maintenant", P1.HP, "HP/", P1.maxHP, "HP")
 	}
@@ -27,7 +28,7 @@ func (m *Monster) goblinPattern(tour int) {
 
 func (p Personnage) charAttack() {
 	ClearLog()
-	fmt.Println(">> Combat d'entraînement <<")
+	fmt.Println(BIWhite + ">> Combat d'entraînement <<" + Reset)
 	fmt.Println("1 >> Coup de poing")
 	fmt.Println("2 >> Boule de feu")
 	fmt.Println("3 >> Retour")
@@ -37,9 +38,11 @@ func (p Personnage) charAttack() {
 	case "1":
 		p.usePunch()
 	case "2":
-		p.useFireball()
+		p.useFireball("Humain")
 	case "3":
 		p.charTurn()
+	default:
+		p.charAttack()
 	}
 }
 
@@ -53,7 +56,6 @@ func (p *Personnage) charTurn() {
 		p.charAttack()
 	case "2":
 		ClearLog()
-		fmt.Println(BIWhite + ">> Appuyez sur entrée pour retourner au combat <<" + Reset)
 		p.accesInventory()
 		p.useInventory(true)
 	default:
@@ -65,23 +67,29 @@ func trainingFight() {
 	InitGoblin()
 	round := true
 	ClearLog()
-	fmt.Println(">> Combat d'entraînement <<")
+	fmt.Println(BIWhite + ">> Combat d'entraînement <<" + Reset) // ne pas enlever sinon premier print non écrit
 	for i := 1; P1.HP > 0; i++ {
 		if round == true {
 			runeName := []rune(P1.nom)
 			ClearLog()
-			fmt.Println(">> Combat d'entraînement <<")
+			fmt.Println(BIWhite + ">> Combat d'entraînement <<" + Reset)
 			fmt.Println(BIGreen+"Round ", i, Reset)
 			if runeName[0] == 'A' || runeName[0] == 'E' || runeName[0] == 'I' || runeName[0] == 'O' || runeName[0] == 'U' {
 				fmt.Print(">> C'est au tour d'", P1.nom, " ! <<\n")
 			} else {
 				fmt.Print(">> C'est au tour de ", P1.nom, " ! <<\n")
 			}
-			if P1.classe == "Humain" {
+			if P1.classe == "Humain" || P1.classe == "Elfe" || P1.classe == "Nain" {
 				P1.charTurn()
 			}
 			if P1.classe == "Esprit de la forêt" {
 				P1.spiritTurn()
+			}
+			if P1.classe == "Sirène" {
+				P1.mermaidTurn()
+			}
+			if P1.classe == "Dieu" {
+				P1.godTurn()
 			}
 			time.Sleep(1 * time.Second)
 			round = false
@@ -89,22 +97,25 @@ func trainingFight() {
 			fmt.Println(BIGreen+"Round ", i, Reset)
 			fmt.Println(">> C'est au tour du", M1.name, " ! <<")
 			M1.goblinPattern(i)
-			fmt.Println(">> Appuyez sur entrée pour continuer... ")
+			fmt.Println(BIWhite + ">> Appuyez sur entrée pour continuer... " + Reset)
 			Input()
 			round = true
 		}
 		if P1.HP == 0 {
 			P1.dead()
-			fmt.Println(">> Appuyez sur entrée pour continuer... ")
+			fmt.Println(BIWhite + ">> Appuyez sur entrée pour continuer... " + Reset)
 			Input()
 			Menu()
 		}
 		if M1.HP <= 0 {
-			min := 1
-			max := 15
+			rand.Seed(time.Now().UnixNano())
+			coins := rand.Intn(11) + 10 //coins min:10 & coins max:20
+			xp := rand.Intn(28) + 10    //xp min:10 & xp max:37
 			fmt.Println(">> ", M1.name, "est mort ! <<")
-			fmt.Println(">> Vous avez gagné", rand.Intn(max-min)+min, "! <<")
-			fmt.Println(">> Appuyez sur entrée pour continuer... ")
+			fmt.Println(">> Vous avez gagné", coins, "coins ! <<")
+			P1.money += coins
+			P1.giveXP(xp)
+			fmt.Println(BIWhite + ">> Appuyez sur entrée pour continuer... " + Reset)
 			Input()
 			Menu()
 		}

@@ -25,7 +25,7 @@ func verif(a rune) bool {
 func Capitalize(s string) string {
 	sRune := []rune(s)
 	lettre := true
-	for i := 0; i < len(s); i++ {
+	for i := 0; i < len(sRune); i++ {
 		if verif(sRune[i]) == true && lettre {
 			if sRune[i] >= 'a' && sRune[i] <= 'z' {
 				sRune[i] += 'A' - 'a'

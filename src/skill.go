@@ -11,7 +11,8 @@ func (p *Personnage) spellBook() {
 	}
 }
 
-func (p Personnage) useFireball() {
+func (p Personnage) useFireball(class string) {
+	class = p.classe
 	ballDmg := 18
 	if p.skill["Boule de feu"] >= 1 {
 		p.skill["Boule de feu"] -= 1
@@ -22,9 +23,20 @@ func (p Personnage) useFireball() {
 		}
 	} else {
 		fmt.Println(">> Vous n'avez pas de boule de feu !<<")
-		fmt.Println(">> Appuyez sur entrée pour continuer... ")
+		fmt.Println(BIWhite + ">> Appuyez sur entrée pour continuer... " + Reset)
 		Input()
-		p.charAttack()
+		if class == "Humain" || class == "Elfe" || class == "Nain" {
+			p.charAttack()
+		}
+		if class == "Esprit de la forêt" {
+			p.spiritAttack()
+		}
+		if class == "Sirène" {
+			p.mermaidAttack()
+		}
+		if class == "Dieu" {
+			p.godAttack()
+		}
 	}
 }
 
